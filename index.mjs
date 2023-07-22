@@ -1,5 +1,5 @@
 import app from "./app.mjs";
-import dbConnect from "./Student/Database/dbConnect.mjs";
+import dbConnect from "./Database/dbConnect.mjs";
 
 const main = async () => {
   let data = await dbConnect();
