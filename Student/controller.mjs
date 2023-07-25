@@ -72,10 +72,12 @@ const oneStudentData = catchAsync(async (req, res, next) => {
 
 const classList = catchAsync(async (req, res, next) => {
   const student = await Student.find();
-  let studentClassList = [];
+  let data = [];
   student.forEach((element) => {
-    studentClassList.push(element.studentClass);
+    data.push(element.studentClass);
   });
+  // removeDuplicates
+  let studentClassList = [...new Set(data)];
   res.json({
     studentClassList,
   });
