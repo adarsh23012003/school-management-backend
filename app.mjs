@@ -1,34 +1,27 @@
 import express from "express";
 import cors from "cors";
-import dbConnect from "./Database/dbConnect.mjs";
+import studentRouter from "./Student/router.mjs";
 
 const app = express();
+
+// cors error
+app.use(cors("*"));
 
 // parse body
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  let data = await dbConnect();
-  data = await data.find().toArray();
-  res.send(data);
-});
-
-app.post("/registerStudent", async (req, res) => {
-  let database = await dbConnect();
-  let result = await database.insertOne(req.body);
-  if (result.acknowledged) {
-    res.send("Data insert successfully");
-  }
-});
+// for image showing
+app.use("/uploads", express.static("uploads"));
 
 // all unknown route handled
+
+// ***************** All route *******************
+app.use("/student", studentRouter);
+
 app.all("*", (req, res) => {
   res.status(404).json({
     message: "route not found",
   });
 });
-
-// cors error
-app.use(cors("*"));
 
 export default app;
