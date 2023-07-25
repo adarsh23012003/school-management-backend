@@ -1,25 +1,14 @@
 import app from "./app.mjs";
-import dbConnect from "./Database/dbConnect.mjs";
+import mongoose from "mongoose";
 
-// ********************* Data getting *********************************
+const url =
+  "mongodb+srv://School-management:340384792347@cluster0.4jxf50a.mongodb.net/student";
+const port = 5000;
+mongoose
+  .connect(url, {})
+  .then(() => console.log("Connected successfully to server"))
+  .catch((error) => console.log(error));
 
-const main = async () => {
-  let data = await dbConnect();
-  data = await data.find().toArray();
-  console.log(data);
-};
-// main();
-// ********************* Data inserting *********************************
-const insert = async () => {
-  const database = await dbConnect();
-  const result = await database.insertOne({
-    name: "banana",
-    age: "26",
-  });
-  console.log(result);
-};
-// insert();
-
-app.listen(5000, () => {
-  console.log("server started is successfully");
+app.listen(port, () => {
+  console.log(`server started on http://localhost:${port}/`);
 });
