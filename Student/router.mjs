@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 router.post("/register", upload.single("image"), register);
 router.get("/classes", classList);
-router.get("/filterByClass", filterByClass);
+router.get("/filterByClass/:studentClass", filterByClass);
 router.get("/", studentData);
 router.get("/:studentId", oneStudentData);
 

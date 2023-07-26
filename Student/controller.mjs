@@ -84,10 +84,13 @@ const classList = catchAsync(async (req, res, next) => {
 });
 
 const filterByClass = catchAsync(async (req, res, next) => {
+  if (!req.params.studentClass) {
+    return next(new ServerError("studentClass field not supplied", 400));
+  }
   const student = await Student.find();
   let filterByClassData = [];
   student.forEach((element) => {
-    if (element.studentClass == req.body.studentClassName) {
+    if (element.studentClass == req.params.studentClass) {
       filterByClassData.push(element);
     }
   });
