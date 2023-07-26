@@ -1,6 +1,5 @@
 import express from "express";
-import multer from "multer";
-const upload = multer({ dest: "uploads/" });
+
 import {
   oneStudentData,
   register,
@@ -10,7 +9,7 @@ import {
 } from "./controller.mjs";
 
 const router = express.Router();
-router.post("/register", upload.single("image"), register);
+router.post("/register", register);
 router.get("/classes", classList);
 router.get("/filterByClass/:studentClass", filterByClass);
 router.get("/", studentData);

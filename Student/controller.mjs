@@ -1,54 +1,50 @@
 import Student from "./model.mjs";
 import ServerError from "../Error/ServerError.mjs";
 import catchAsync from "../Error/catchAsync.mjs";
+import { v2 as cloudinary } from "cloudinary";
+
+cloudinary.config({
+  cloud_name: "djiymg314",
+  api_key: "262539191658251",
+  api_secret: "sWITdZDUzNJ5cvYRyr9dd6QkRjA",
+  secure: true,
+});
 
 const register = catchAsync(async (req, res, next) => {
-  // if (
-  //   !req.body.fullName ||
-  //   !req.body.fatherName ||
-  //   !req.body.motherName ||
-  //   !req.body.address ||
-  //   !req.body.email ||
-  //   !req.body.mobileNumber ||
-  //   !req.body.category ||
-  //   !req.body.gender ||
-  //   !req.body.dob ||
-  //   !req.body.studentClass ||
-  //   !req.body.image
-  // ) {
-  //   return next(new ServerError("Some field not supplied", 400));
-  // }
-  //   const storage = multer.diskStorage
-  // const student = new Student(req.body);
-  // await student.save();
-  // res.json("cool");
+  const file = req.files.image;
+  cloudinary.uploader.upload(file.tempFilePath, async (err, result) => {
+    if (result) {
+      const fullName = req.body.fullName;
+      const fatherName = req.body.fatherName;
+      const motherName = req.body.motherName;
+      const address = req.body.address;
+      const email = req.body.email;
+      const mobileNumber = req.body.mobileNumber;
+      const category = req.body.category;
+      const gender = req.body.gender;
+      const dob = req.body.dob;
+      const studentClass = req.body.studentClass;
+      const image = result.url;
 
-  const fullName = req.body.fullName;
-  const fatherName = req.body.fatherName;
-  const motherName = req.body.motherName;
-  const address = req.body.address;
-  const email = req.body.email;
-  const mobileNumber = req.body.mobileNumber;
-  const category = req.body.category;
-  const gender = req.body.gender;
-  const dob = req.body.dob;
-  const studentClass = req.body.studentClass;
-  const image = req.file.path;
-
-  const student = new Student({
-    fullName: fullName,
-    fatherName: fatherName,
-    motherName: motherName,
-    address: address,
-    email: email,
-    mobileNumber: mobileNumber,
-    category: category,
-    gender: gender,
-    dob: dob,
-    studentClass: studentClass,
-    image: image,
+      const student = new Student({
+        fullName: fullName,
+        fatherName: fatherName,
+        motherName: motherName,
+        address: address,
+        email: email,
+        mobileNumber: mobileNumber,
+        category: category,
+        gender: gender,
+        dob: dob,
+        studentClass: studentClass,
+        image: image,
+      });
+      await student.save();
+    } else {
+      console.log(err);
+    }
   });
-  await student.save();
+
   res.json("Added successfully");
 });
 const studentData = catchAsync(async (req, res, next) => {
@@ -76,7 +72,7 @@ const classList = catchAsync(async (req, res, next) => {
   student.forEach((element) => {
     data.push(element.studentClass);
   });
-  // removeDuplicates
+  // removeDuplicates in array
   let studentClassList = [...new Set(data)];
   res.json({
     studentClassList,
