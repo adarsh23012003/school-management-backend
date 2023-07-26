@@ -6,7 +6,8 @@
     "express-fileupload": "^1.4.0",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.0",
-    "nodemon": "^3.0.1"
+    "nodemon": "^3.0.1",
+    "validator": "^13.9.0"
   },
   "name": "school-management-backend",
   "version": "1.0.0",
