@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import studentRouter from "./Student/router.mjs";
 import fileUpload from "express-fileupload";
+import userRouter from "./User/router.mjs";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
 
 // ***************** All route *******************
 app.use("/student", studentRouter);
+app.use("/user", userRouter);
 
 app.all("*", (req, res) => {
   res.status(404).json({
