@@ -7,12 +7,18 @@ import {
   classList,
   filterByClass,
 } from "./controller.mjs";
+import { adminPermission } from "../middlewares/authorization.mjs";
+import auth from "../middlewares/authentication.mjs";
 
 const router = express.Router();
 router.post("/register", register);
-router.get("/classes", classList);
-router.get("/filterByClass/:studentClass", filterByClass);
-router.get("/", studentData);
-router.get("/:studentId", oneStudentData);
+router.route("/classes").get(auth, adminPermission.permission, classList);
+router
+  .route("/filterByClass/:studentClass")
+  .get(auth, adminPermission.permission, filterByClass);
+router.route("/").get(auth, adminPermission.permission, studentData);
+router
+  .route("/:studentId")
+  .get(auth, adminPermission.permission, oneStudentData);
 
 export default router;
