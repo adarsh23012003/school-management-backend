@@ -1,1 +1,5 @@
+# Environment variables.
 /node_modules
+# dotenv environment variables file
+.env
+config.env
