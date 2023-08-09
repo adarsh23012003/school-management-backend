@@ -14,7 +14,7 @@
   "name": "school-management-backend",
   "version": "1.0.0",
   "description": "small-backend signup and data showing",
-  "main": "index.js",
+  "main": "index.mjs",
   "scripts": {
     "dev": "nodemon -e env,mjs,json,js"
   },
